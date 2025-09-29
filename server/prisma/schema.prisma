@@ -1,0 +1,383 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// uuid -> String longa e Não ordenável | A chance de gerar dois UUIDs idênticos é praticamente nula.
+//cuid -> String curta e ordenável por tempo | A chance de colisão, embora baixa, é maior que a de um UUID.
+// meus modelos -> tabelas
+
+model InformacaoPlataforma {
+  idInformacao    Int     @id @default(autoincrement())
+  nome            String
+  versao          Float
+  termosCondicoes String //nos termos e condições definir também os motivos de reprovação de um produto ou motivos de bloqueio de um formador/aluno
+  politicas       String
+  descricao       String?
+}
+
+//esta tabela é usada para guardar os código de confirmação de email ou o codigo de autorização de recuperação de senha
+model ConfirmacaoEmail {
+  idConfirmacao Int    @id @default(autoincrement())
+  email         String
+  codigo        String
+  dataExpiracao String
+
+  Role   Role   @relation(fields: [idRole], references: [idRole])
+  idRole String
+}
+
+//esta tabela é usada para guardar convites de acesso directo a Sala de exposições privadas
+model ConviteAcesso {
+  idConvite     Int    @id @default(autoincrement())
+  codigo        String
+  dataExpiracao String
+
+  SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
+  idSalaExposicao String        @db.Uuid
+
+  //cliente convidado
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+//esta tabela é usada para guardar solicitações de acesso a Sala de exposições privadas
+//a solicitacao de acesso não tem data de expiracao
+//assim que aprovada a solicitação é removida, para não sobrecarregar a tabela
+model SolicitacaoAcesso {
+  idSolicitacao Int    @id @default(autoincrement())
+  codigo        String
+  estado        String @default("pendente") // pendente, aprovada, recusada
+
+  SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
+  idSalaExposicao String        @db.Uuid
+
+  //cliente que solicitou o cesso
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+model Usuario {
+  idUsuario       String   @id @default(uuid()) @db.Uuid
+  nome            String
+  email           String   @unique //email deve ser único e nem mesmo um artista pode ter o mesmo email que um cliente
+  nif             String?  @unique
+  senha           String
+  dataRegistro    DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+  estado          Boolean  @default(true) //true -> permitido, false-> bloqueado
+  isVerificado    Boolean  @default(false)
+
+  Role   Role   @relation(fields: [idRole], references: [idRole])
+  idRole String @unique
+
+  Provincia   Provincia? @relation(fields: [idProvincia], references: [idProvincia])
+  idProvincia String?    @db.Uuid
+
+  ClassificacaoArtista ClassificacaoArtista[]
+  Mensagem             Mensagem[]
+  SalaExposicao        SalaExposicao[] //um artista pode criar varias Salas
+  ConviteAcesso        ConviteAcesso[]
+  Acesso               Acesso[] //o cliente pode ter acesso a varias salas
+
+  PerfilUsuario PerfilUsuario @relation(fields: [idPerfil], references: [idPerfil])
+  idPerfil      Int           @unique
+
+  Telefone Telefone[]
+
+  Notificacao Notificacao[]
+
+  AcessoMensagem AcessoMensagem[]
+
+  ArtistasFavoritos ArtistasFavoritos[] //um artista pode ser favorito de muitos clientes
+
+  Denuncia          Denuncia[]
+  SolicitacaoAcesso SolicitacaoAcesso[]
+}
+
+//tipo de usuario
+model Role {
+  idRole    String @id @default(cuid())
+  descricao String @unique //admin, artist, client
+
+  Usuario Usuario[]
+
+  ConfirmacaoEmail ConfirmacaoEmail[]
+}
+
+model PerfilUsuario {
+  idPerfil        Int      @id @default(autoincrement())
+  biografia       String?
+  isVerificado    Boolean? @default(false) //apenas para os artistas
+  imagemPerfil    String?
+  dataAtualizacao DateTime @updatedAt //o campo será atualizado sempre que o registro correspondente for modificado
+  preferencias    String[] //as preferencias vai conter as categorias de arte preferidas pelo cliente
+
+  Usuario Usuario?
+  Link    Link?
+}
+
+model Link {
+  idLink    String  @id @default(cuid())
+  site      String?
+  facebook  String?
+  linkedin  String?
+  instagram String?
+  tiktok    String?
+
+  PerfilUsuario         PerfilUsuario @relation(fields: [idPerfil], references: [idPerfil])
+  idPerfil Int           @unique
+}
+
+model Telefone {
+  idTelefone      Int      @id @default(autoincrement())
+  numero          String
+  codigoPais      String
+  tipo            String   @default("padrao") //padrao ou whatsapp
+  dataRegistro    DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt //o campo será atualizado sempre que o registro correspondente for modificado
+
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+model Pais {
+  idPais String @id @default(uuid()) @db.Uuid
+  nome   String @unique
+
+  //relação com Provincia
+  Provincia Provincia[]
+}
+
+model Provincia {
+  idProvincia String @id @default(uuid()) @db.Uuid
+  nome        String //não é único porque dois paises diferentes podem ter provincias com o mesmo nome
+
+  //relação com Pais
+  Pais   Pais   @relation(fields: [idPais], references: [idPais])
+  idPais String @db.Uuid
+
+  //relação com Aluno
+  Usuario Usuario[]
+}
+
+model ClassificacaoArtista {
+  idClassificacao Int      @id @default(autoincrement())
+  estrelas        Int
+  comentario      String
+  dataCriacao     DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+
+  //Artista avaliado
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+
+  //Cliente que avaliou
+  idAvaliadador String
+}
+
+model SalaExposicao {
+  idSalaExposicao String   @id @default(uuid()) @db.Uuid
+  nome            String
+  visibilidade    String   @default("publico") //publico ou privado
+  urlArquivo      String? //imagem de banner da sala
+  dataCriacao     DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+  dataAbertura    String? //se não tiver uma data de abertura, vai ser aberta assim que criada (vai receber a data de criação)
+  isOpen          Boolean  @default(true)
+
+  Chat Chat[]
+
+  Obra Obra[]
+
+  //Artista ou autor da SalaExposicao
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+
+  ConviteAcesso     ConviteAcesso[]
+  Acesso            Acesso[]
+  SolicitacaoAcesso SolicitacaoAcesso[]
+}
+
+model Acesso {
+  idAcesso Int    @id @default(autoincrement())
+  modo     String //modo de acesso a sala, por "convite", "solicitacao", "directo"
+  //convite - é quando o cliente acedeu por meio de um convite de acesso
+  //solicitacao - é quando o cliente solicitou o acesso em uma sala publica
+  //directo - é quando o cliente acedeu de forma directa a uama sala publica, sem precisar de convite de acesso
+
+  SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
+  idSalaExposicao String        @db.Uuid
+
+  //cliente que aderiu a Sala de exposição
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+//Cada Chat pertence a uma Sala de Exposição e uma sala pode ter varios chats
+model Chat {
+  idChat String  @id @default(cuid())
+  isOpen Boolean @default(true) //os artistas(autores de uma exposição) podem abrir ou fechar o chat, ou seja, fazer com que todos enviem mensagens ou apenas eles
+
+  Mensagem Mensagem[]
+
+  SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
+  idSalaExposicao String        @db.Uuid
+}
+
+//Um usuario pode enviar varias mensagens e uma mensagem pode ser acessada por varios usuarios
+// relacionamento: M - M
+model Mensagem {
+  idMensagem  Int      @id @default(autoincrement())
+  conteudo    String
+  dataCriacao DateTime @default(now())
+  dataEdicao  DateTime @updatedAt
+  urlArquivo  String?
+
+  //Usuario que escreveu a mensagem | que pode ser Artista ou Cliente
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+
+  Chat   Chat   @relation(fields: [idChat], references: [idChat])
+  idChat String
+
+  AcessoMensagem AcessoMensagem[]
+}
+
+//deve ser criado um registro (na tabela AcessoMensagem) para cada usuario que tem acesso a mensagem
+model AcessoMensagem {
+  idAcessoMensagem Int     @id @default(autoincrement())
+  isVisivel        Boolean @default(true) //se ele eliminar será: false. Ou seja, o usuario só oculta o acesso a mensagem, mas a mensagem não é eliminada
+
+  //usuario com acesso a mensagem
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+
+  Mensagem           Mensagem @relation(fields: [mensagemIdMensagem], references: [idMensagem])
+  mensagemIdMensagem Int
+}
+
+model Notificacao {
+  idNotificacao String   @id @default(cuid())
+  conteudo      String
+  data          DateTime @default(now())
+  estado        String   @default("pendente") //tipos de estado: pendente(ou não lida) e lida
+  isVisivel     Boolean  @default(true) //se ele eliminar será: false
+
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+model Obra {
+  idObra          String   @id @default(uuid()) @db.Uuid
+  titulo          String
+  descricao       String //pode conter as dimensões da obra, material usado, etc...
+  preco           String?
+  anoConclusao    Int // ano em que obra foi concluida
+  dataCriacao     DateTime @default(now()) //data em que foi registrado no sistema
+  dataAtualizacao DateTime @updatedAt
+  isOpen          Boolean  @default(true)
+
+  Categoria   Categoria @relation(fields: [idCategoria], references: [idCategoria])
+  idCategoria String
+
+  SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
+  idSalaExposicao String        @db.Uuid
+
+  ObrasFavoritas ObrasFavoritas[] //uma obra poder ser favorita de muitos clientes
+
+  ImagensObra ImagensObra[]
+
+  ClassificacaoObra ClassificacaoObra[]
+}
+
+model ClassificacaoObra {
+  idClassificacao Int      @id @default(autoincrement())
+  estrelas        Int
+  comentario      String
+  dataCriacao     DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+
+  //Obra avaliada
+  Obra   Obra   @relation(fields: [idObra], references: [idObra])
+  idObra String @db.Uuid
+
+  //Cliente que avaliou
+  idAvaliadador String
+}
+
+model ImagensObra {
+  idImagem  String  @id @default(cuid())
+  descricao String?
+  urlImagem String
+  isMain    Boolean //true se for a imagem principal da obra
+
+  Obra   Obra   @relation(fields: [idObra], references: [idObra])
+  idObra String @db.Uuid
+}
+
+// (ex: "realismo", "pintura a óleo", "paisagem", "cartoom")
+model Categoria {
+  idCategoria String @id @default(cuid())
+  slug        String @unique //é um identificador que pode ser usado em vez do id (pode ser usado na url)
+  descricao   String @unique
+
+  Obra Obra[]
+}
+
+model ObrasFavoritas {
+  idFavorito String @id @default(cuid())
+
+  //cliente
+  idCliente String @db.Uuid
+
+  //obra
+  Obra   Obra   @relation(fields: [idObra], references: [idObra])
+  idObra String @db.Uuid
+}
+
+model ArtistasFavoritos {
+  idFavorito String @id @default(cuid())
+
+  //cliente
+  idCliente String @db.Uuid
+
+  //artista
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+}
+
+model Denuncia {
+  idDenuncia      Int      @id @default(autoincrement())
+  titulo          String
+  descricao       String
+  dataCriacao     DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+  urlArquivo      String?
+  estado          String   @default("pendente") //estados: pendente(ou em avaliação), recusada, tratada
+
+  //usuario que fez a denuncia
+  Usuario   Usuario @relation(fields: [idUsuario], references: [idUsuario])
+  idUsuario String  @db.Uuid
+
+  TipoDenuncia   TipoDenuncia @relation(fields: [idTipoDenuncia], references: [idTipoDenuncia])
+  idTipoDenuncia Int
+}
+
+//pode ser "conteúdo inapropriado", "violação de direitos de autor", etc
+model TipoDenuncia {
+  idTipoDenuncia Int    @id @default(autoincrement())
+  descricao      String
+
+  Denuncia Denuncia[]
+}
