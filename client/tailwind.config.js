@@ -10,6 +10,9 @@ module.exports = {
     prefix: "",
     theme: {
         extend: {
+            padding:{
+                'p':'px-20'
+            },
             colors: {
                 'primary-color': '#fff',
 				'secondary-base-color': '#B6D6FF',
@@ -25,7 +28,6 @@ module.exports = {
 				'gray-dark-color': '#505050',
 				'black-color': '#202020',
 
-                
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
@@ -88,7 +90,8 @@ module.exports = {
 			lg: '992px',
 			xl: '1200px',
 			'2xl': '1400px'
-		}
+		},
+        
     },
   plugins: [require("tailwindcss-animate"),heroui()],
     // Adicione esta secção para habilitar variantes arbitrárias para data-atributos

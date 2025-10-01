@@ -2,20 +2,20 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Logo } from '@/components/logo'
+import { Logo } from '../components/Logo'
 
-const enterpriseLinks = [
-    { href: '#', label: 'About' },
-    { href: '#', label: 'Customers' },
-    { href: '#', label: 'Partners' },
-    { href: '#', label: 'Jobs' },
+const LinksPlataforma = [
+    { href: '#', label: 'Sobre' },
+    { href: '#', label: 'Termos e Condições' },
+    { href: '#', label: 'Políticas' },
+    { href: '#', label: 'Parceria' },
 ]
 
-const productLinks = [
-    { href: '#', label: 'Security' },
-    { href: '#', label: 'Customization' },
-    { href: '#', label: 'Enterprise' },
-    { href: '#', label: 'Partners' },
+const LinksProdutos = [
+    { href: '#', label: 'Exposições' },
+    { href: '#', label: 'Obras' },
+    { href: '#', label: 'Artistas' },
+    { href: '#', label: 'Lançamentos' },
 ]
 
 const docsLinks = [
@@ -25,21 +25,15 @@ const docsLinks = [
     { href: '#', label: 'Principles' },
 ]
 
-const communityLinks = [
-    { href: '#', label: 'GitHub' },
-    { href: '#', label: 'Discord' },
-    { href: '#', label: 'Slack' },
-    { href: '#', label: 'X / Twitter' },
-]
 
 const footerLinks = [
     {
-        name: 'Enterprise',
-        links: enterpriseLinks,
+        name: 'Plataforma',
+        links: LinksPlataforma,
     },
     {
-        name: 'Product',
-        links: productLinks,
+        name: 'Produtos',
+        links: LinksProdutos,
     },
     {
         name: 'Docs',
@@ -222,11 +216,11 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="bg-muted mt-16 flex items-center justify-between rounded-md p-4 px-6 py-3">
-                    <span>&copy; tailus 2021 - Present</span>
+                    <span>&copy; Mukutart 2025 - Todos os direitos reservados</span>
                     <Link
                         to="#"
                         className="text-muted-foreground hover:text-primary text-sm">
-                        Licence
+                        open Source
                     </Link>
                 </div>
             </div>

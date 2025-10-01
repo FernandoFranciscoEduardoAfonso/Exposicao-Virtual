@@ -39,6 +39,14 @@ button,
   white-space: nowrap;
 }
 
+
+/* Classe personalizada para espaçamento horizontal responsivo */
+@layer components {
+  .site-padding-x {
+    @apply px-4 md:px-8 lg:px-16 xl:px-20;
+  }
+}
+
 /* padronização do tamanho das letras */
 
 /* padrão do Bootstrap 5 */
@@ -403,50 +411,52 @@ textarea {
   max-height: 100%;
   place-items: center;
   margin: 50px 0px;
-  padding: 10px;
   list-style-type: none;
   opacity: 1;
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%);
+  /* mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%); */
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 10.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%);
   overflow: hidden;
 }
-
 
 .section-title::before {
   content: "";
   position: absolute;
-  top: 0; 
+  top: 0;
   left: 0;
   right: 0;
-  
+
   /* Altura da nossa "borda" gradiente */
-  height: 1px; 
-  
+  height: 1px;
+
   /* O Gradiente de 3 Cores (Branco, Preto, Branco) */
-  background: linear-gradient(
-    to right, 
-    #fff 0%,    /* Começa branco no lado esquerdo */
-    #999  0%,   /* Chega no preto exatamente no centro */
-    #fff 100%   /* Volta a ser branco no lado direito */
-  );
+  background: linear-gradient(to right,
+      #fff 0%,
+      /* Começa branco no lado esquerdo */
+      #999 0%,
+      /* Chega no preto exatamente no centro */
+      #fff 100%
+      /* Volta a ser branco no lado direito */
+    );
 }
 
 .section-title::after {
   content: "";
   position: absolute;
-  bottom: 0; 
+  bottom: 0;
   left: 0;
   right: 0;
-  
-  /* Altura da nossa "borda" gradiente */
-  height: 1px; 
-  
-  /* O Gradiente de 3 Cores (Branco, Preto, Branco) */
-  background: linear-gradient(
-    to right, 
-    #fff 0%,    /* Começa branco no lado esquerdo */
-    /* #432dd7  100%,    Chega no preto exatamente no centro */
-    #999  100%,   /* Chega no preto exatamente no centro */
-    #fff 100%   /* Volta a ser branco no lado direito */
-  );
-}
 
+  /* Altura da nossa "borda" gradiente */
+  height: 1px;
+
+  /* O Gradiente de 3 Cores (Branco, Preto, Branco) */
+  background: linear-gradient(to right,
+      #fff 0%,
+      /* Começa branco no lado esquerdo */
+      /* #432dd7  100%,    Chega no preto exatamente no centro */
+      #999 100%,
+      /* Chega no preto exatamente no centro */
+      #fff 100%
+      /* Volta a ser branco no lado direito */
+    );
+}

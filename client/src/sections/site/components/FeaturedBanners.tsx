@@ -1,8 +1,16 @@
-import {Card, CardHeader, CardFooter, Button} from "@heroui/react";
+import { Card, CardHeader, CardFooter, Button } from "@heroui/react";
+import SectionTitle from "./SectionTitle";
+import FeaturedTitle from "./FeaturedTitle";
 
 export default function FeaturedBanners() {
   return (
-    <div className="max-w-[100%] gap-2 grid grid-cols-12 grid-rows-2">
+    <div className="site-padding-x w-full gap-2 grid grid-cols-12 pt-20">
+
+      <div className="col-span-12">
+        <SectionTitle textoNormal="Obras " textoDestaque='Patrocinadas' posicaoDestaque='right' posicaoPadrao='center' />
+        <FeaturedTitle text='Veja o que encontarás na Plataforma'></FeaturedTitle>
+      </div>
+
       <Card className="col-span-12 sm:col-span-4 h-[300px]">
         <CardHeader className="absolute z-10 top-1 flex-col items-start!">
           <p className="text-tiny text-white/60 uppercase font-bold">What to watch</p>

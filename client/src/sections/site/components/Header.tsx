@@ -1,10 +1,8 @@
-import { Logo } from '@/components/logo'
 import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
-import ProfileDropdown from './kokonutui/profile-dropdown'
+import ProfileDropdown from '@/components/kokonutui/profile-dropdown'
 
 const menuItems = [
     { name: 'Início', href: '#link' },

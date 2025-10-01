@@ -1,11 +1,11 @@
-const SectionTitle = ({ textoNormal, textoDestaque, posicaoDestaque }: { textoNormal: string, textoDestaque: string, posicaoDestaque: string }) => {
+const SectionTitle = ({ textoNormal, textoDestaque, posicaoDestaque, posicaoPadrao }: { textoNormal: string, textoDestaque: string, posicaoDestaque: string, posicaoPadrao?: string }) => {
     return (
-        <div className="text-center text-2xl md:text-3xl xl:text-[2.7rem]">
+        <div className={`${posicaoPadrao == "center" && 'text-center'} font-semibold text-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem]`}>
             {
                 posicaoDestaque == 'right' &&
                 <>
                     {textoNormal}
-                    <span className="text-indigo-700 ml-2">
+                    <span className="text-indigo-700">
                         {textoDestaque}
                     </span>
                 </>
@@ -13,7 +13,7 @@ const SectionTitle = ({ textoNormal, textoDestaque, posicaoDestaque }: { textoNo
             {
                 posicaoDestaque == 'left' &&
                 <>
-                    <span className="text-indigo-700 mr-2">
+                    <span className="text-indigo-700">
                         {textoDestaque}
                     </span>
                     {textoNormal}
