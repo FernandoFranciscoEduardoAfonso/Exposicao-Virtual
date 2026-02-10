@@ -43,8 +43,8 @@ const footerLinks = [
 
 export default function Footer() {
     return (
-        <footer className="m-1 border-t w-[100%]">
-            <div className="mx-auto max-w-6xl space-y-16 px-5 py-16">
+        <footer className="w-full site-padding-x border-t">
+            <div className="mx-auto space-y-16 px-5 py-16">
                 <div className='flex justify-between'>
                     <div className='flex flex-col gap-2'>
                         <Link

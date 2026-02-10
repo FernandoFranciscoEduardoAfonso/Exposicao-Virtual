@@ -98,8 +98,18 @@ export class Art {
         return art as ArtDataProps
     }
 
+    getAllArts = async (): Promise<any> => {
+        const art = await prisma.obra.findMany({
+            include: {
+                Categoria: true,
+                ImagensObra: true
+            }
+        })
+        return art as Array<ArtDataProps>
+    }
+
     //todas as obras de um artista
-    getAllArts = async (idSalaExposicao: string): Promise<any> => {
+    getExpositionsArts = async (idSalaExposicao: string): Promise<any> => {
         const art = await prisma.obra.findMany({
             where: {
                 idSalaExposicao,

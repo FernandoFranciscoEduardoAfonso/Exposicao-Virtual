@@ -1,4 +1,7 @@
+import artClientController from "@/controllers/client/artController";
+import roomClientController from "@/controllers/client/roomController";
 import acessController from "@/controllers/shared/acessController";
+import artPublicController from "@/controllers/shared/artController";
 import filterController from "@/controllers/shared/filterController";
 import recommendationController from "@/controllers/shared/recommendationController";
 import { authCookieUsuario } from "@/middlewares/authCookieUsuario";
@@ -23,7 +26,7 @@ export const publicRoutes = async (app: FastifyTypedInstance) => {
     })
 
     // login e registro
-    app.post("/acess/:role/login", {
+    app.post("/acesso/:role/login", {
         schema: {
             tags: ["Site"],
             description: "Login user",
@@ -31,7 +34,7 @@ export const publicRoutes = async (app: FastifyTypedInstance) => {
         }
     }, acessController.login)
 
-    app.post("/acess/:role/register", {
+    app.post("/acesso/:role/registar", {
         schema: {
             tags: ["Site"],
             description: "Register user",
@@ -39,12 +42,24 @@ export const publicRoutes = async (app: FastifyTypedInstance) => {
         }
     }, acessController.register)
 
-    app.delete("/logout", {
+    app.get('/acesso/dadosUsuario', { onRequest: authCookieUsuario }, acessController.getUserData) //verificar o cookie
+
+    //rotas para enviar o código de verificação no email definido
+    app.post('/acesso/autenticacao', acessController.sendVerificationCode)
+
+    //rotas para buscar o codigo de verificação de email correspondente ao email definido
+    app.get('/acesso/autenticacao/:email', acessController.getVerificationCode)
+
+    //eliminar os códigos de verificação de email já expirados
+    app.delete("/expiredEmailConfirmation", acessController.deleteExpiredEmailVerification)
+
+    app.delete("/acesso/logout", {
         schema: {
             tags: ["Usuário"],
             description: "Logout Session",
-            preHandler: authCookieUsuario //middleware de autenteticação
-        }
+            // preHandler: authCookieUsuario //middleware de autenteticação
+        },
+        // onRequest: authCookieUsuario
     }, acessController.logout)
 
     //teste
@@ -54,4 +69,13 @@ export const publicRoutes = async (app: FastifyTypedInstance) => {
             description: "Filter Arts",
         }
     }, recommendationController.getRecommendedArts)
+
+    //Obras
+    app.get('/obras', artPublicController.getAllArts)
+
+    // Painel do artista
+    app.get('/painel/obrasFavoritas', { onRequest: authCookieUsuario }, artClientController.getAllFavoritesArts)
+    app.get('/painel/artistasFavoritos', { onRequest: authCookieUsuario }, artClientController.getAllFavoritesArtists)
+    app.get('/painel/exposicoesInscritas', { onRequest: authCookieUsuario }, roomClientController.getAllAccessedRooms)
+
 }

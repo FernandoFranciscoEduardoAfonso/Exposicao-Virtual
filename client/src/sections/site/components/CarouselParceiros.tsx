@@ -1,15 +1,17 @@
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 import { ProgressiveBlur } from "@/components/ui/progressive-blur"
+import { useTheme } from "@/components/ui/theme-provider"
 
 const CarouselParceiros = () => {
+    const { theme } = useTheme()
     return (
-        <section className="bg-background my-8">
-            <div className="group relative m-auto max-w-7xl px-6">
-                <div className="flex flex-col items-center md:flex-row">
+        <section className="bg-background my-4">
+            <div className="site-padding-x group relative m-auto max-w-[100vw]">
+                <div className="flex flex-col items-center gap-y-2 md:flex-row">
                     <div className="md:max-w-44 md:border-r md:pr-6">
                         <p className="text-end text-sm">Nossos Queridos Parceiros</p>
                     </div>
-                    <div className="relative py-6 md:w-[calc(100%-11rem)]">
+                    <div className={`${theme == 'dark' && 'bg-black/80'} relative py-6 md:w-[calc(100%-11rem)]`}>
                         <InfiniteSlider reverse
                             speedOnHover={20}
                             speed={40}

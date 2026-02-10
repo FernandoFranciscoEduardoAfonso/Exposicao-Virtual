@@ -11,13 +11,14 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, } from 'react-router-dom'
 
 import { router } from './routes/router.tsx'
+import { HeroUIProvider } from "@heroui/react";
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-  <StrictMode>
-    
+  <StrictMode >
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <HeroUIProvider>
+        <RouterProvider router={router}/>
+      </HeroUIProvider>
     </QueryClientProvider>
-
   </StrictMode>,
 )

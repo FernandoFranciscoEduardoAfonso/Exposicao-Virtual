@@ -37,7 +37,6 @@ export class Room {
     }
 
     //funcoes para Artistas
-
     createRoom = async (roomData: CreateRoomProps): Promise<any> => {
         let room = await prisma.salaExposicao.create({
             data: {
@@ -92,7 +91,6 @@ export class Room {
         return room as RoomDataProps
 
     }
-
 
     //Convites de acesso - são feitas pelo artista
     sendAcessInviteToRoom = async (codigo: string, dataExpiracao: string, idUsuario: string, idSalaExposicao: string): Promise<any> => {

@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import SendMailTransport from 'nodemailer/lib/sendmail-transport';
 
-
 import * as dotenv from 'dotenv'
 dotenv.config()
 

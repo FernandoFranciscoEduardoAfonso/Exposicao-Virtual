@@ -3,31 +3,36 @@ import { ArrowRight, Mail, SendHorizonal, UserCheck } from "lucide-react"
 import { Link } from "react-router-dom"
 import image from '@/sections/site/assets/images/bebe.jpg'
 import SectionTitle from "../components/SectionTitle"
-import CardHorizontal from "@/sections/shared/components/CardHorizontal"
-import FeaturedTitle from "../components/FeaturedTitle"
-import RecommendedArts from "@/sections/shared/components/RecommendedArts"
+import RecommendedArts from "@/sections/site/components/RecommendedArts"
 import FeaturedBanners from "../components/FeaturedBanners"
 import CarouselParceiros from "../components/CarouselParceiros"
 import FeaturedArts from "../components/FeaturedArts"
 import HeroSection from "../components/HeroSection"
 import FeaturedExpositions from "../components/FeaturedExpositions"
 import NextLaunchesExpositions from "../components/NextLaunchesExpositions"
-
+import AnimatedVideo from "@/sections/site/components/AnimatedVideo"
+import FeaturedArtists from "@/sections/site/components/FeaturedArtists"
+import Faqs from "@/sections/site/components/Faqs"
 
 const Inicio = () => {
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full flex flex-col md:gap-y-8 gap-y-5 justify-center items-center">
+
       <HeroSection />
+
+      <AnimatedVideo />
 
       <FeaturedBanners />
 
       <FeaturedArts />
 
-      <RecommendedArts />
+      <div className="site-padding-x">
+        <RecommendedArts />
+      </div>
 
       <main className="site-padding-x w-[100%]">
-        <section className="overflow-hidden">
-          <div className="relative mx-auto max-w-5x py-28 lg:py-20 ">
+        <section className="overflow-hidden rounded-lg border">
+          <div className="relative mx-auto p-8">
             <div className="lg:flex lg:items-center lg:gap-12">
               <div className="relative z-10 mx-auto max-w-xl text-center lg:ml-0 lg:w-1/2 lg:text-left">
                 <Link
@@ -78,22 +83,22 @@ const Inicio = () => {
               </div>
             </div>
 
-            <div className="absolute inset-0 -mx-4 rounded-3xl p-3 lg:col-span-3">
+            <div className="absolute inset-0 -mx-4 p-3 lg:col-span-3">
               <div className="relative">
-                <div className="bg-radial-[at_65%_25%] to-background z-1 -inset-17 absolute from-transparent to-40%"></div>
+                <div className="overflow-hidden bg-radial-[at_65%_25%] to-background z-1 -inset-17 absolute from-transparent to-40%"></div>
                 <img
                   className="hidden dark:block w-full"
                   src={image}
                   alt="app illustration"
-                  // width={2796}
-                  // height={2008}
+                // width={2796}
+                // height={2008}
                 />
                 <img
                   className="dark:hidden w-full"
                   src={image}
                   alt="app illustration"
-                  // width={2796}
-                  // height={2008}
+                // width={2796}
+                // height={2008}
                 />
               </div>
             </div>
@@ -105,17 +110,9 @@ const Inicio = () => {
 
       <NextLaunchesExpositions />
 
-      <main className="site-padding-x pt-20">
-        <div>
-          <SectionTitle textoNormal="Tipos de " textoDestaque='Usuários' posicaoDestaque='right' posicaoPadrao='center' />
-          <FeaturedTitle text='Explore as obras mais curtidas e analisadas na Plataforma' />
-        </div>
-        <div className="flex flex-wrap md:flex-nowrap gap-4">
-          <CardHorizontal />
-          <CardHorizontal />
-        </div>
+      <FeaturedArtists />
 
-      </main>
+      <Faqs />
 
       <CarouselParceiros />
 

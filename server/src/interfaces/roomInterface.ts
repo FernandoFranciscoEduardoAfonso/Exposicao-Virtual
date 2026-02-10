@@ -34,3 +34,12 @@ export interface InviteDataProps {
     Usuario: any,
     idUsuario: string
 }
+
+export interface AcessoDataProps {
+    idAcesso: number,
+    modo: string,
+    SalaExposicao: any,
+    idSalaExposicao: string,
+    Usuario: any,
+    idUsuario: string
+}

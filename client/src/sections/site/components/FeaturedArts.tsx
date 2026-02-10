@@ -8,7 +8,7 @@ import FeaturedTitle from './FeaturedTitle'
 
 const FeaturedArts = () => {
     return (
-        <section className='site-padding-x container-melhores-obras w-full border'>
+        <section className='site-padding-x container-melhores-obras w-full'>
 
             <div className='flex flex-col gap-y-4 w-full'>
                 <div>
@@ -16,7 +16,7 @@ const FeaturedArts = () => {
                     <FeaturedTitle text='Explore as obras mais curtidas e analisadas na Plataforma'></FeaturedTitle>
                 </div>
 
-                <InfiniteSlider className=''
+                <InfiniteSlider
                     speedOnHover={20}
                     speed={70}
                     gap={10}>
@@ -33,11 +33,11 @@ const FeaturedArts = () => {
 
 const CardFeaturedArt = () => {
     return (
-        <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
+        <div className='shrink-0 rounded-2xl opacity-[1] group relative'>
             <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
                 <Link
                     to="/"
-                    className="block text-[12px] lg:text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
+                    className="block text-[12px] lg:text-sm duration-150 text-gray-700 bg-white px-4 py-2 rounded-2xl">
                     <span>Ver mais sobre a obra</span>
                     <ChevronRight className="ml-1 inline-block size-3" />
                 </Link>
@@ -52,7 +52,7 @@ const CardFeaturedArt = () => {
                     <span className='text-gray-600 text-[12.5px] lg:text-[0.8rem]'>Pintura</span>
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 export default FeaturedArts

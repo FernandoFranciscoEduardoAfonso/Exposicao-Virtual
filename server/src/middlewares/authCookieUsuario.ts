@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ReplyProps } from "../interfaces/replyInterface";
+import { PayloadProps, ReplyProps } from "../interfaces/replyInterface";
 import { prisma } from "../database/prisma";
 import { verifyToken } from "../lib/jwt";
 
@@ -8,34 +8,38 @@ import fastifyJwt from '@fastify/jwt';
 
 //Autenticar o usuário por meio do cookie
 export const authCookieUsuario = async (request: FastifyRequest<{ Body: any }>, reply: FastifyReply) => {
+    let result: ReplyProps = { success: false, status: 400, message: "Falha na requisição" }//por padrão
     try {
-        const { access_token } = request.cookies;
-        // access_token - é o nome do cookie criado ao fazer login
-        console.log("Token: " + access_token)
+        if (!request.cookies['access_token']) {
+            result = { success: false, status: 401, message: "Nenhum cookie encontrado" }
+            return reply.status(result.status).send(result);
+        }
+        const cookieAssinado = request.cookies['access_token'] as string
 
-        if (!access_token) {
-            const response: ReplyProps = { success: false, status: 401, message: "Não autenticado: Token ausente." };
-            return reply.status(response.status).send(response);
-        } else {
-            // Verificar se o token é válido, se for vai retornar o payload
-            const payload = verifyToken(access_token)
+        // o método unsignCookie limpa a assinatura do Fastify
+        const unsignedCookie = request.unsignCookie(cookieAssinado);
 
-            //verificar se o usuario existe na base dados
-            const user = await prisma.usuario.findUnique({ where: { idUsuario: payload.idUsuario } })
+        // verifica se o cookie é válido
+        const cookieLimpo = unsignedCookie.valid ? unsignedCookie.value : null;
 
-            if (!payload || !user) {
-                const response: ReplyProps = { success: false, status: 401, message: "Não autenticado: Usuário não encontrado." };
-                return reply.status(response.status).send(response);
-            }
-
-            // Aqui você pode armazenar o payload no request para uso posterior
-            //o fastifjwt vai permitir criar variaveis nas requisições
-            request.user = payload;
-
-            // Se a autenticação for bem-sucedida, não envie uma resposta aqui
-            // O fluxo continuará para o manipulador da rota        
+        if (!cookieLimpo) {
+            result = { success: false, status: 401, message: "Nenhum cookie encontrado" }
+            return reply.status(result.status).send(result);
         }
 
+        //verificar o token | o cookieLimpo é o token
+        const payload = verifyToken(cookieLimpo) as PayloadProps
+        if (!payload) {
+            result = { success: false, status: 401, message: "Token inválido" }
+            return reply.status(result.status).send(result);
+        }
+
+        // Aqui você pode armazenar o payload no request para uso posterior
+        //o fastifjwt vai permitir criar variaveis nas requisições
+        request.user = payload;
+
+        // Se a autenticação for bem-sucedida, não envie uma resposta aqui
+        // O fluxo continuará para o manipulador da rota        
     } catch (error) {
         console.log(error);
         const response: ReplyProps = { success: false, status: 401, message: "Não autenticado: Token inválido ou expirado." };

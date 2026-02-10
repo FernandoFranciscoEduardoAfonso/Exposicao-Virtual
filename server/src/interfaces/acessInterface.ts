@@ -13,3 +13,10 @@ export interface UserDataProps {
     estado: boolean;
     idProvincia: string | null;
 }
+
+export interface VerificationCodeProps{
+    email: string,
+    idRole: string,
+    codigo: string,
+    dataExpiracao: string
+}

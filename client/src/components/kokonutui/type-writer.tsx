@@ -131,14 +131,14 @@ export default function TypewriterTitle({
                 ref={scope}
             >
                 <motion.div
-                    className="text-4xl md:text-6xl font-mono text-black dark:text-white tracking-tight flex items-center gap-2"
+                    className="text-4xl md:text-6xl font-mono tracking-tight flex items-center gap-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                 >
                     <span
                         data-typewriter
-                        className="inline-block border-r-2 border-black dark:border-white animate-cursor pr-1 mt-6
-                        text-6xl md:text-7xl xl:text-[5.25rem] text-indigo-700"
+                        className="inline-block border-r-2 dark:border-white animate-cursor pr-1 mt-6
+                        text-4xl md:text-5xl xl:text-[3.8rem]"
                     >
                         {sequences[0].text}
                     </span>

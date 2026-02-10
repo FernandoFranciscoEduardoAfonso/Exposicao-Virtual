@@ -1,32 +1,32 @@
-const {heroui} = require('@heroui/theme');
+// const { heroui } = require('@heroui/theme');
+// import { heroui } from '@heroui/react';
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ["class"], // Ou 'media' se preferir detetar automaticamente
-  content: [
-    "./index.html",
-    "./src/**/*.{ts,tsx,js,jsx}",
-    "./node_modules/@heroui/theme/dist/components/(card|ripple).js"
-  ],
+    content: [
+        "./index.html",
+        "./src/**/*.{ts,tsx,js,jsx}",
+        // "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
+    ],
     prefix: "",
     theme: {
         extend: {
-            padding:{
-                'p':'px-20'
-            },
             colors: {
-                'primary-color': '#fff',
-				'secondary-base-color': '#B6D6FF',
-				'secondary-medium-color': '#f0f9ff',
-				'secondary-light-color': '#f6f7f8',
-				'terciary-base-color': '#006CE9',
-				'terciary-light-color': '#5CA5F9',
-				'terciary-medium-color': '#2F5785',
-				'terciary-dark-color': '#173960',
-				'gray-base-color': '#ababab',
-				'gray-medium-color': '#909090',
-				'gray-light-color': '#ececec',
-				'gray-dark-color': '#505050',
-				'black-color': '#202020',
+                // 'primary-color': '#fff',
+                // 'secondary-base-color': 'red ', //cor violeta base
+                // 'secondary-medium-color': '#9385ff', //cor violeta media
+                // 'secondary-light-color': '#f1f0ff', //cor violeta clara
+
+                // 'terciary-base-color': '#008069', //cor verde base
+                // 'terciary-medium-color': '#4ea696', //cor verde clara
+                // 'terciary-light-color': '#f5fffd', //or verde media
+
+                // 'gray-base-color': '#ababab',
+                // 'gray-medium-color': '#909090',
+                // 'gray-light-color': '#ececec',
+                // 'gray-dark-color': '#505050',
+                // 'black-color': '#202020',
+
 
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
@@ -62,6 +62,10 @@ module.exports = {
                     foreground: "hsl(var(--card-foreground))",
                 },
             },
+
+            padding: {
+                'p': 'px-20'
+            },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
@@ -84,16 +88,17 @@ module.exports = {
         },
 
         screens: {
-			xs: '0px',
-			sm: '576px',
-			md: '768px',
-			lg: '992px',
-			xl: '1200px',
-			'2xl': '1400px'
-		},
-        
+            xs: '0px',
+            sm: '576px',
+            md: '768px',
+            lg: '992px',
+            xl: '1200px',
+            '2xl': '1400px'
+        },
+
     },
-  plugins: [require("tailwindcss-animate"),heroui()],
+    // plugins: [require("tailwindcss-animate"), heroui()], na versão 3 do tailwind
+    plugins: [require("tailwindcss-animate"),], // Como o Tailwind v4 prefere uma abordagem CSS-first, não será necessário.tailwind.config.js
     // Adicione esta secção para habilitar variantes arbitrárias para data-atributos
     // Isto é crucial para classes como in-data-[state=active]:...
     corePlugins: {

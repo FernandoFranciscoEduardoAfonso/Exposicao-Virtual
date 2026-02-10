@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
 import {
     Carousel,
     CarouselContent,
@@ -12,10 +12,8 @@ import {
 import { cn } from "@/lib/utils";
 import SectionTitle from "@/sections/site/components/SectionTitle";
 import FeaturedTitle from "@/sections/site/components/FeaturedTitle";
-import { Badge } from "@/components/ui/badge";
 import image from '@/sections/site/assets/images/image-13.webp'
-import { VerifiedIcon } from "lucide-react";
-import CardObra from "@/sections/shared/components/CardObra";
+import { Calendar } from "lucide-react";
 
 
 export default function NextLaunchesExpositions() {
@@ -37,9 +35,9 @@ export default function NextLaunchesExpositions() {
     }, [api]);
 
     return (
-        <div className="site-padding-x w-[100%] pb-8">
+        <div className="site-padding-x w-[100%]">
             <div>
-                <SectionTitle textoNormal="Obras Mais " textoDestaque='Populares' posicaoDestaque='right' posicaoPadrao='center' />
+                <SectionTitle textoNormal="Futuros " textoDestaque='Lançamentos' posicaoDestaque='right' posicaoPadrao='center' />
                 <FeaturedTitle text='Explore as obras mais curtidas e analisadas na Plataforma'></FeaturedTitle>
             </div>
 
@@ -49,51 +47,30 @@ export default function NextLaunchesExpositions() {
                 }}
                 className="w-full"
             >
-                <CarouselContent className="p-0">
+                <CarouselContent>
 
                     {Array.from({ length: 5 }).map((_, index) => (
                         <CarouselItem key={index} className="flex basis-1/2 md:basis-1/3 lg:basis-1/4">
-                            <Card className="border-0 w-[100%] p-0 h-[400px]">
+                            <Card className="border-0 w-[100%] p-0 h-[320px] overflow-hidden relative group cursor-pointer ">
                                 <img
                                     alt="Card background"
-                                    className="z-0 object-cover rounded-xl p-0 w-full h-full"
+                                    className="z-0 object-cover rounded-xl p-0 w-full h-full group-hover:scale-105 transition-all duration-500"
                                     src={image}
                                 />
                                 <CardFooter
-                                    className="absolute h-full z-10 bottom-0 flex-col gap-2 justify-end items-start 
-                   bg-gradient-to-t from-black/40 to-transparent p-0
-                   pt-16 rounded-b-xl"
+                                    className="absolute h-full w-full z-10 flex-col gap-2 justify-end items-start 
+                   bg-gradient-to-t from-black/40 to-transparent p-4
+                   rounded-b-xl"
                                 >
-                                    <Badge className="bg-green-600 text-white">Aberta</Badge>
-                                    <h4 className="text-white font-medium text-2xl">Sala de Pinturas Agrícolas</h4>
-                                    <div className="flex gap-3">
-                                        <div className="shrink-0">
-                                            <div className="h-10 w-10 rounded-full overflow-hidden">
-                                                <img
-                                                    src={image}
-                                                    alt={'Trunfo'}
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <div className="flex items-center gap-1">
-                                                <span className="text-white">
-                                                    Fernando Eduardo
-                                                </span>
-                                                <VerifiedIcon className="h-4 w-4 text-blue-400" />
-                                            </div>
-                                        </div>
+                                    {/* <Badge className="bg-green-600 text-white">Aberta</Badge> */}
+                                    <h5 className="text-white font-medium text-sm lg:text-base truncate">Sala de Pinturas Agrícolas</h5>
+                                    <div className="flex gap-3 text-gray-300">
+                                        <Calendar size={18} className=""/>
+                                        <span className="text-xs lg:text-sm">10 de Outubro de 2024, 08:35</span>
                                     </div>
-
                                 </CardFooter>
                             </Card>
 
-                            {/* <Card className="w-[100%] p-0">
-                                <CardContent className="flex aspect-video items-center justify-center p-0">
-                                    <CardObra />
-                                </CardContent>
-                            </Card> */}
                         </CarouselItem>
                     ))}
                 </CarouselContent>

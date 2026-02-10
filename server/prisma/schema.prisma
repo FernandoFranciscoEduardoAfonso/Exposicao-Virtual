@@ -79,7 +79,7 @@ model Usuario {
   isVerificado    Boolean  @default(false)
 
   Role   Role   @relation(fields: [idRole], references: [idRole])
-  idRole String @unique
+  idRole String
 
   Provincia   Provincia? @relation(fields: [idProvincia], references: [idProvincia])
   idProvincia String?    @db.Uuid
@@ -135,8 +135,8 @@ model Link {
   instagram String?
   tiktok    String?
 
-  PerfilUsuario         PerfilUsuario @relation(fields: [idPerfil], references: [idPerfil])
-  idPerfil Int           @unique
+  PerfilUsuario PerfilUsuario @relation(fields: [idPerfil], references: [idPerfil])
+  idPerfil      Int           @unique
 }
 
 model Telefone {
@@ -291,6 +291,7 @@ model Obra {
   Categoria   Categoria @relation(fields: [idCategoria], references: [idCategoria])
   idCategoria String
 
+  //uma obra pode não estar vinculada a varias exposicoes, alterar isso
   SalaExposicao   SalaExposicao @relation(fields: [idSalaExposicao], references: [idSalaExposicao])
   idSalaExposicao String        @db.Uuid
 

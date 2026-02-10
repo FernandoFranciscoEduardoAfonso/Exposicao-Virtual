@@ -1,12 +1,19 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
+ @plugin './hero.ts';
 
-/*  ---break---*/
-@custom-variant dark (&:is(.dark *));
+/* Importações necessáriuas para usar o Hero ui */
+/* Inicio */
+/* @plugin './hero.ts'; */
+/* Note: You may need to change the path to fit your project structure */
+/* @source '../../node_modules/@heroui/theme/dist*.{js,ts,jsx,tsx}' ; */
+@source './../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark ( & : is ( .dark * ) ) ;
+/* Fim */
 
 @font-face {
   font-family: poppins;
-  src: url(./sections/shared/assets/fonts/Poppins-Regular.ttf);
+  src: url(./sections/shared/assets/fonts/Inter_28pt-Regular.ttf);
   font-display: swap;
   /*  Esta propriedade CSS é crucial para a performance. Ela diz ao navegador para exibir o texto usando uma fonte do sistema imediatamente e, em seguida, trocar para a sua fonte personalizada assim que ela for baixada*/
 }
@@ -39,197 +46,53 @@ button,
   white-space: nowrap;
 }
 
-
 /* Classe personalizada para espaçamento horizontal responsivo */
 @layer components {
   .site-padding-x {
-    @apply px-4 md:px-8 lg:px-16 xl:px-20;
+    @apply px-4 md:px-6 lg:px-10 xl:px-12;
   }
-}
-
-/* padronização do tamanho das letras */
-
-/* padrão do Bootstrap 5 */
-
-/* hr {
-  margin: 1rem 0;
-  color: inherit;
-  background-color: currentColor;
-  border: 0;
-  opacity: 0.25;
-}
-
-hr:not([size]) {
-  height: 1px;
-} 
-
-h6,
-h5,
-h4,
-h3,
-h2,
-h1 {
-  margin-top: 0;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-h1 {
-  font-size: calc(1.375rem + 1.5vw);
-}
-
-@media (min-width: 1200px) {
-  h1 {
-    font-size: 2.5rem;
+  .site-padding-y {
+    @apply pt-20 md:pt-24 lg:pt-28 mb-10;
   }
-}
-
-h2 {
-  font-size: calc(1.325rem + 0.9vw);
-}
-
-@media (min-width: 1200px) {
-  h2 {
-    font-size: 2rem;
+  .card-container {
+    @apply p-4 bg-background rounded-md shadow;
   }
-}
-
-h3 {
-  font-size: calc(1.3rem + 0.6vw);
-}
-
-@media (min-width: 1200px) {
-  h3 {
-    font-size: 1.75rem;
+  .card-border {
+    @apply border border-muted-foreground/20;
   }
+  
 }
-
-h4 {
-  font-size: calc(1.275rem + 0.3vw);
-}
-
-@media (min-width: 1200px) {
-  h4 {
-    font-size: 1.5rem;
-  }
-}
-
-h5 {
-  font-size: calc(1.1rem + 0.1vw);
-}
-
-@media (min-width: 1200px) {
-  h5 {
-    font-size: 1.2rem;
-  }
-}
-
-h6 {
-  font-size: calc(0.9rem + 0.1vw);
-}
-
-@media (min-width: 1200px) {
-  h6 {
-    font-size: 1rem;
-  }
-}
-
-p {
-  margin-top: 0;
-  margin-bottom: 0rem;
-  font-size: calc(0.8rem + 0.1vw);
-}
-
-@media (min-width: 1200px) {
-  p {
-    font-size: 1rem;
-  }
-}
-
-span{
-  font-size: calc(0.8rem + 0.1vw);
-}
-
-small {
-  font-size: 0.875em;
-}
-
-mark {
-  padding: 0.2em;
-  background-color: #fcf8e3;
-}
-
-sub,
-sup {
-  position: relative;
-  font-size: 0.75em;
-  line-height: 0;
-  vertical-align: baseline;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-sup {
-  top: -0.5em;
-}
-
-figure {
-  margin: 0 0 1rem;
-}
-
-img,
-svg {
-  vertical-align: middle;
-}
-
-table {
-  caption-side: bottom;
-  border-collapse: collapse;
-}
-
-caption {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  color: #6c757d;
-  text-align: left;
-}
-
-th {
-  text-align: inherit;
-  text-align: -webkit-match-parent;
-}
-
-thead,
-tbody,
-tfoot,
-tr,
-td,
-th {
-  border-color: inherit;
-  border-style: solid;
-  border-width: 0;
-}
-
-label {
-  display: inline-block;
-}
-
-input,
-button,
-select,
-optgroup,
-textarea {
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-} */
 
 /*  ---break---*/
 
-@theme inline {
+@theme {
+  /* Minhas cores personlizadas */
+
+  /* Cores de Base */
+  --primary: #fff;
+
+  /* Cores Secundárias (Violeta) */
+  --secondary-base: #4f39f6; /* cor violeta base */
+  --secondary-medium: #9385ff; /* cor violeta media */
+  --secondary-light: #f1f0ff; /* cor violeta clara */
+  --secondary-dark: #291e7b; /* cor violeta clara */
+
+  /* Cores Terciárias (Verde) */
+  --tertiary-base: #008069; /* cor verde base */
+  --tertiary-medium: #4ea696; /* cor verde clara */
+  --tertiary-light: #f5fffd; /* or verde media */
+  --tertiary-dark: #00614f; /*or verde media*/
+
+  /* Cores Cinzentas */
+  --gray-base: #ababab;
+  --gray-medium: #909090;
+  --gray-light: #ececec;
+  --gray-dark: #505050;
+
+  --black: #202020;
+
+  /* Cores e outras propriedades das bibliotecas */
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -242,8 +105,8 @@ textarea {
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --secondary: var(--secondary);
+  --secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -270,9 +133,11 @@ textarea {
 /*  ---break---*/
 
 :root {
+  /* Cores de Bibliotecas adicionadas, como o tailark, shadcn/ui e etc... */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background-app: oklch(98.5% 0.002 247.839);
+  --foreground: oklch(37.3% 0.034 259.733);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -307,8 +172,10 @@ textarea {
 /*  ---break---*/
 
 .dark {
-  --background: oklch(0.145 0 0);
+  /* --background: oklch(0.145 0 0); */
+  --background: rgb(29, 29, 29);
   --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -317,7 +184,8 @@ textarea {
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  /* --muted: oklch(0.269 0 0); */
+  --muted: oklch(28.213% 0.00547 285.966);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
@@ -354,7 +222,7 @@ textarea {
 
 /* Estilo do btn com borda girando */
 .btn-border-rotate {
-  padding: .10rem;
+  padding: .12rem;
   position: relative;
   overflow: hidden;
   width: -webkit-fit-content;
@@ -371,7 +239,7 @@ textarea {
   border-radius: 1rem;
   z-index: 2;
   position: relative;
-  border: 4px solid #fff;
+  border: 3px solid #fff;
   margin-top: -0.9px;
   /* padding: 0 2px; */
 }
@@ -382,7 +250,7 @@ textarea {
   inset: -1px;
   border-radius: 1rem;
   pointer-events: none;
-  background: conic-gradient(#432dd7, transparent);
+  background: conic-gradient(#4f39f6, transparent);
   -webkit-animation: rotateBorder 2.5s linear infinite;
   animation: rotateBorder 2.5s linear infinite;
   width: 150%;
@@ -410,7 +278,7 @@ textarea {
   /* max-width: 100%; */
   max-height: 100%;
   place-items: center;
-  margin: 50px 0px;
+  /* margin: 50px 0px; */
   list-style-type: none;
   opacity: 1;
   /* mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%); */
@@ -459,4 +327,15 @@ textarea {
       #fff 100%
       /* Volta a ser branco no lado direito */
     );
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }

@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
 import TypewriterTitle from '@/components/kokonutui/type-writer'
+import BtnBorderRotate from './BtnBorderRotate'
+import { useTheme } from '@/components/ui/theme-provider'
 
 
 const transitionVariants = {
@@ -29,7 +31,7 @@ const transitionVariants = {
 export default function HeroSection() {
     return (
         <>
-            <main className="overflow-hidden">
+            <main className="overflow-hidden lg:mb-10 mb-5">
                 <FundoHeroSection />
 
                 <ConteudoHeroSection />
@@ -38,12 +40,11 @@ export default function HeroSection() {
     )
 }
 
-
-
 const FundoHeroSection = () => {
     return (
-        <div aria-hidden className="absolute inset-0 isolate opacity-70 contain-strict overflow-hidden">
-            <div aria-hidden className="absolute inset-0 isolate opacity-65 contain-strict overflow-hidden">
+        <div aria-hidden className="overflow-hidden absolute inset-0 isolate contain-strict">
+            {/* Gradient a esquerda 1 */}
+            <div aria-hidden className="absolute inset-0 isolate contain-strict overflow-hidden opacity-50">
                 {/* <!-- Gradientes radiais originais --> */}
                 <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(247,72%,80%,.40)_0,hsla(247,72%,50%,.20)_50%,hsla(247,72%,45%,0)_80%)] float-animation"></div>
                 <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(247,72%,80%,.25)_0,hsla(247,72%,50%,.10)_80%,transparent_100%)] [translate:5%_-50%] pulse-animation"></div>
@@ -57,88 +58,46 @@ const FundoHeroSection = () => {
                 {/* Quadrados Azuis Claros (Tonalidade #432dd7) */}
 
                 {/* Mais opaco (50%) */}
-                <div className="absolute top-20 left-40 w-20 h-20 bg-indigo-300/50"></div>
-                <div className="absolute bottom-40 right-40 w-20 h-20 bg-indigo-300/50"></div>
-                <div className="absolute top-40 right-80 w-20 h-20 bg-indigo-400/50"></div> {/* NOVO 1 */}
-                <div className="absolute bottom-20 right-60 w-20 h-20 bg-indigo-300/50"></div> {/* NOVO 2 */}
-                <div className="absolute top-60 right-20 w-20 h-20 bg-indigo-300/50"></div> {/* NOVO 3 */}
+                <div className="absolute top-20 left-40 w-20 h-20 bg-(--tertiary-base)"></div>
+                <div className="absolute bottom-40 right-40 w-20 h-20 bg-(--tertiary-base)"></div>
+                <div className="absolute top-40 right-80 w-20 h-20 bg-indigo-400/30"></div> {/* NOVO 1 */}
+                <div className="absolute bottom-20 right-60 w-20 h-20 bg-(--tertiary-base)"></div> {/* NOVO 2 */}
+                <div className="absolute top-60 right-20 w-20 h-20 bg-(--tertiary-base)"></div> {/* NOVO 3 */}
 
 
                 {/* Menos opaco (30%) */}
-                <div className="absolute top-0 left-60 w-20 h-20 bg-indigo-300/30"></div>
-                <div className="absolute top-60 left-20 w-20 h-20 bg-indigo-300/30"></div>
-                <div className="absolute bottom-60 right-60 w-20 h-20 bg-indigo-300/30"></div>
+                <div className="absolute top-0 left-60 w-20 h-20 bg-indigo-500/30"></div>
+                <div className="absolute top-60 left-20 w-20 h-20 bg-indigo-500/30"></div>
+                <div className="absolute bottom-60 right-60 w-20 h-20 bg-indigo-500/30"></div>
                 <div className="absolute bottom-0 left-40 w-20 h-20 bg-indigo-200/30"></div> {/* NOVO 4 */}
-                <div className="absolute top-40 left-80 w-20 h-20 bg-indigo-300/30"></div> {/* NOVO 5 */}
+                <div className="absolute top-40 left-80 w-20 h-20 bg-indigo-500/30"></div> {/* NOVO 5 */}
 
 
                 {/* Quadrados Cinzas Claros */}
 
                 {/* Cinza (40%) */}
-                <div className="absolute top-40 left-0 w-20 h-20 bg-gray-200/40"></div>
-                <div className="absolute top-80 left-40 w-20 h-20 bg-gray-200/40"></div>
-                <div className="absolute bottom-40 left-60 w-20 h-20 bg-gray-300/40"></div> {/* NOVO 6 */}
-                <div className="absolute top-0 right-80 w-20 h-20 bg-gray-200/40"></div> {/* NOVO 7 */}
+                <div className="absolute top-40 left-0 w-20 h-20 bg-gray-200/80"></div>
+                <div className="absolute top-80 left-40 w-20 h-20 bg-gray-200/80"></div>
+                <div className="absolute bottom-40 left-60 w-20 h-20 bg-gray-300/80"></div> {/* NOVO 6 */}
+                <div className="absolute top-0 right-80 w-20 h-20 bg-gray-200/80"></div> {/* NOVO 7 */}
 
 
                 {/* Cinza (20%) - Mais sutil */}
-                <div className="absolute top-20 right-80 w-20 h-20 bg-gray-200/20"></div>
-                <div className="absolute bottom-80 left-20 w-20 h-20 bg-gray-200/20"></div>
-                <div className="absolute bottom-20 left-60 w-20 h-20 bg-gray-200/20"></div>
-                <div className="absolute top-80 right-20 w-20 h-20 bg-gray-100/20"></div> {/* NOVO 8 */}
-                <div className="absolute bottom-80 right-40 w-20 h-20 bg-gray-200/20"></div> {/* NOVO 9 */}
-                <div className="absolute top-20 left-0 w-20 h-20 bg-gray-200/20"></div> {/* NOVO 10 */}
+                <div className="absolute top-20 right-80 w-20 h-20 bg-gray-200/30"></div>
+                <div className="absolute bottom-80 left-20 w-20 h-20 bg-gray-200/30"></div>
+                <div className="absolute bottom-20 left-60 w-20 h-20 bg-gray-200/30"></div>
+                <div className="absolute top-80 right-20 w-20 h-20 bg-gray-100/30"></div> {/* NOVO 8 */}
+                <div className="absolute bottom-80 right-40 w-20 h-20 bg-gray-200/30"></div> {/* NOVO 9 */}
+                <div className="absolute top-20 left-0 w-20 h-20 bg-gray-200/30"></div> {/* NOVO 10 */}
 
-
-                {/* --- Linhas Horizontais (Seu Código Original) --- */}
-                <div className="absolute top-0 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute top-20 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute top-40 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute top-60 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute top-80 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute bottom-80 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute bottom-60 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute bottom-40 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute bottom-20 left-0 w-full h-px bg-purple-400"></div>
-                <div className="absolute bottom-0 left-0 w-full h-px bg-purple-400"></div>
-
-                {/* --- Linhas Verticais (Seu Código Original) --- */}
-                <div className="absolute top-0 left-0 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 left-20 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 left-40 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 left-60 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 left-80 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-100 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-80 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-60 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-40 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-20 h-full w-px bg-purple-400"></div>
-                <div className="absolute top-0 right-0 h-full w-px bg-purple-400"></div>
             </div>
         </div>
     )
 }
 
-{/* <div
-                    aria-hidden
-                    className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block">
-                    <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
-                    <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
-                    <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
-                </div> 
-
-
-                <div
-                    aria-hidden
-                    className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block">
-                    <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(247,72%,80%,.40)_0,hsla(247,72%,50%,.20)_50%,hsla(247,72%,45%,0)_80%)]" />
-                    <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(247,72%,80%,.25)_0,hsla(247,72%,50%,.10)_80%,transparent_100%)] [translate:5%_-50%]" />
-                    <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(247,72%,80%,.20)_0,hsla(247,72%,50%,.10)_80%,transparent_100%)]" />
-                </div> 
-                */}
-
-
 const ConteudoHeroSection = () => {
+    const { theme } = useTheme()
+
     return (
         <section>
             <div className="relative pt-24 md:pt-36">
@@ -169,7 +128,7 @@ const ConteudoHeroSection = () => {
                             preset="fade-in-blur"
                             speedSegment={0.3}
                             as="h1"
-                            className="mt-8 text-balance text-5xl md:text-6xl xl:text-[4.25rem] lg:mt-16">
+                            className="mt-8 text-balance text-4xl md:text-5xl xl:text-[3.8rem] lg:mt-16">
                             Sala de Exposição Virtual para:
                         </TextEffect>
 
@@ -183,7 +142,7 @@ const ConteudoHeroSection = () => {
                             speedSegment={0.3}
                             delay={0.5}
                             as="p"
-                            className="mx-auto mt-8 max-w-2xl text-balance text-lg">
+                            className={`mx-auto mt-8 max-w-2xl text-balance text-base text-muted-foreground`}>
                             Highly customizable components for building modern websites and applications that look and feel the way you mean it.
                         </TextEffect>
 
@@ -200,7 +159,7 @@ const ConteudoHeroSection = () => {
                                 ...transitionVariants,
                             } as any}
                             className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">
-                            <div
+                            {/* <div
                                 key={1}
                                 className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] btn-border-rotate">
                                 <div className='content'>
@@ -213,13 +172,13 @@ const ConteudoHeroSection = () => {
                                         </Link>
                                     </Button>
                                 </div>
-                            </div>
+                            </div> */}
+                            <BtnBorderRotate text='Começar uma exposição' link="/" />
                             <Button
                                 key={2}
                                 asChild
                                 size="lg"
-                                variant="ghost"
-                                className="h-10.5 rounded-xl px-5 py-6">
+                                className="h-10 rounded-xl px-5 py-6 bg-white hover:bg-white text-gray-600 border">
                                 <Link to="#link">
                                     <span className="text-nowrap">Ver uma demonstração</span>
                                 </Link>
@@ -246,130 +205,6 @@ const ConteudoHeroSection = () => {
                             aria-hidden
                             className="bg-linear-to-b to-background absolute inset-0 z-10 from-transparent from-50%"
                         />
-
-                        <div className="h-[auto] p-4 inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl shadow-lg shadow-zinc-950/15 ring-1">
-
-                            {/* Carousel com  slides a horizontal e a vertical */}
-                            {/* <div className='flex gap-2'>
-                                        <div className='w-[auto]'>
-                                            <InfiniteSlider direction='vertical'
-                                                speedOnHover={20}
-                                                speed={40}
-                                                gap={10}>
-
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-                                            </InfiniteSlider>
-                                        </div>
-
-                                        <div className='flex gap-2 flex-col w-[auto]'>
-                                            <InfiniteSlider 
-                                                speedOnHover={20}
-                                                speed={40}
-                                                gap={10}>
-
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-
-                                            </InfiniteSlider>
-
-                                            <InfiniteSlider reverse
-                                                speedOnHover={20}
-                                                speed={40}
-                                                gap={10}>
-
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-                                                <Link to={"#"} className='shrink-0 rounded-2xl opacity-[1] group relative'>
-                                                    <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-sm duration-150 bg-white px-4 py-2 rounded-2xl">
-                                                            <span>Ver mais sobre a obra</span>
-
-                                                            <ChevronRight className="ml-1 inline-block size-3" />
-                                                        </Link>
-                                                    </div>
-                                                    <div className='rounded-[inherit] inset-0 group-hover:blur-xs transition-all duration-500 group-hover:opacity-50'>
-                                                        <img decoding="auto" src={image} alt="Imagem_Obra" className="aspect-[1/2] block w-[360px]  h-[300px] rounded-[inherit] object-center object-cover" />
-                                                    </div>
-                                                </Link>
-
-                                            </InfiniteSlider>
-                                        </div>
-                                    </div> */}
-
-                            {/* Imagem de destaque */}
-                            {/* <img
-                                        className="w-[100%] z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src={image}
-                                        alt="app screen"
-                                    /> */}
-                        </div>
                     </div>
                 </AnimatedGroup>
             </div>
