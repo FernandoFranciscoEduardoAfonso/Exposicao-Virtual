@@ -1,0 +1,29 @@
+name: Node JS CI
+
+on:  # Dispara em qualquer push ou PR
+  push:
+  pull_request:
+ 
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4 # Clona o teu código
+
+      - name: Instalar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm' # Faz cache automático para ser mais rápido
+
+      - name: Instalar dependências
+        # run: npm install
+        run: npm ci # 'npm ci' é mais rápido e seguro em ambientes de CI que o 'install'
+
+      - name: Rodar testes
+        run: npm test
+        env: 
+          DATABASE_URL: ""
